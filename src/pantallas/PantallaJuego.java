@@ -3,6 +3,7 @@ package pantallas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ComponentEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.Random;
@@ -13,35 +14,36 @@ import principal.PanelJuego;
 import principal.Pantalla;
 import principal.Sprite;
 
-public class PantallaJuego implements Pantalla {
+import java.awt.event.KeyListener;
 
-    //Fondo 
+public class PantallaJuego implements Pantalla, KeyListener {
+
+    // Fondo
     private BufferedImage fondo;
 
-    //Instancia panel juego
+    // Instancia panel juego
     private PanelJuego panelJuego;
 
-    //referencia a la ventana
+    // referencia a la ventana
     private JFrame ventana;
 
-    //CONSTANTES
+    // CONSTANTES
     private final static int ANCHO_BOLA = 40;
     private final static int ALTO_BOLA = 40;
 
-    //CIRCULOS
+    // CIRCULOS
     private Sprite[] circulos;
     private Sprite bolaLanzamiento;
     private Sprite siguientebola;
 
-    //COLORES
-    private Color[] colorsBolas = {Color.BLUE, Color.GREEN, Color.YELLOW, Color.RED};
+    // COLORES
+    private Color[] colorsBolas = { Color.BLUE, Color.GREEN, Color.YELLOW, Color.RED };
 
-    //Random
+    // Random
     private Random random;
 
-    //Palo
+    // Palo
     private Sprite palo;
-
 
     public PantallaJuego(PanelJuego panelJuego, JFrame ventana) {
         this.panelJuego = panelJuego;
@@ -51,26 +53,26 @@ public class PantallaJuego implements Pantalla {
         random = new Random();
     }
 
-
     @Override
     public void inicializarPantalla() {
 
         ventana.setBackground(new Color(180, 174, 244));
         int contador = 0;
-        for (int i = 0; i < circulos.length/10; i++) {
+        for (int i = 0; i < circulos.length / 10; i++) {
             for (int j = 0; j < 10; j++) {
-                circulos[contador] = new Sprite(0, colorsBolas[random.nextInt(colorsBolas.length)], ANCHO_BOLA, ALTO_BOLA, ANCHO_BOLA*j, ALTO_BOLA*(i), 0, 0);
+                circulos[contador] = new Sprite(0, colorsBolas[random.nextInt(colorsBolas.length)], ANCHO_BOLA,
+                        ALTO_BOLA, ANCHO_BOLA * j, ALTO_BOLA * (i), 0, 0);
 
                 contador++;
             }
-            
-            
-        }
-        
-        palo = new Sprite(1, Color.BLACK, 10, 100,  ventana.getWidth()/2, ventana.getHeight() - ANCHO_BOLA*2, 0, 0);
 
-        bolaLanzamiento = new Sprite(0,colorsBolas[random.nextInt(colorsBolas.length)], ANCHO_BOLA, ALTO_BOLA, ventana.getWidth()/2 -25, ventana.getHeight() - ANCHO_BOLA*2, 0, 0);
-        
+        }
+
+        palo = new Sprite(1, Color.BLACK, 10, 100, ventana.getWidth() / 2, ventana.getHeight() - 99, 0, 0);
+
+        bolaLanzamiento = new Sprite(0, colorsBolas[random.nextInt(colorsBolas.length)], ANCHO_BOLA, ALTO_BOLA,
+                ventana.getWidth() / 2 - 25, ventana.getHeight() - ANCHO_BOLA * 2, 0, 0);
+
     }
 
     @Override
@@ -78,7 +80,7 @@ public class PantallaJuego implements Pantalla {
         for (int i = 0; i < circulos.length; i++) {
             circulos[i].estampar(g);
         }
-        
+
         bolaLanzamiento.estampar(g);
         palo.estampar(g);
     }
@@ -103,6 +105,28 @@ public class PantallaJuego implements Pantalla {
 
     @Override
     public void redimensionarPantalla(ComponentEvent e) {
+        // TODO Auto-generated method stub
+
+    }
+
+
+    //Listeners teclas
+    @Override
+    public void keyTyped(KeyEvent e) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+       if (e.) {
+           
+       }
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
         // TODO Auto-generated method stub
 
     }
