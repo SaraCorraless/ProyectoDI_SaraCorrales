@@ -3,6 +3,8 @@ package principal;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.ComponentEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.KeyEvent;
 
 
 /**
@@ -43,4 +45,9 @@ public interface Pantalla {
      * Método que redimensiona la pantalla para que nierda calidad
      */
     public void redimensionarPantalla(ComponentEvent e);
+
+
+    public void moverFlecha(KeyEvent e);
+
+    public void dejarDePulsar(KeyEvent e);
 }

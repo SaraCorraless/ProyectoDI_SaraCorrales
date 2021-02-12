@@ -13,10 +13,11 @@ import javax.swing.JFrame;
 import principal.PanelJuego;
 import principal.Pantalla;
 import principal.Sprite;
+import java.awt.Point;
 
 import java.awt.event.KeyListener;
 
-public class PantallaJuego implements Pantalla, KeyListener {
+public class PantallaJuego implements Pantalla{
 
     // Fondo
     private BufferedImage fondo;
@@ -44,11 +45,20 @@ public class PantallaJuego implements Pantalla, KeyListener {
 
     // Palo
     private Sprite palo;
+    private int posX , posY;
+    private Point p0, p1;
+
+    private int angulo;
 
     public PantallaJuego(PanelJuego panelJuego, JFrame ventana) {
         this.panelJuego = panelJuego;
         this.ventana = ventana;
+        posX = ventana.getWidth() / 2;
+        posY = ventana.getHeight() - 99;
+        angulo = 90;
 
+        /* p0 = new Point(ventana.getWidth() / 2, ventana.getHeight() -palo.getAlto());
+        p1 = new Point(ventana.getWidth()/2, ventana.getHeight()); */
         circulos = new Sprite[40];
         random = new Random();
     }
@@ -110,26 +120,43 @@ public class PantallaJuego implements Pantalla, KeyListener {
     }
 
 
-    //Listeners teclas
     @Override
-    public void keyTyped(KeyEvent e) {
-        // TODO Auto-generated method stub
+    public void moverFlecha(KeyEvent e) {
+        switch(e.getKeyCode()){
+			case KeyEvent.VK_0:
+                int x = (int) Math.sin(angulo);
+				palo.setPosX(x);
+
+                int y = (int) Math.cos(angulo);
+				palo.setPosX(y);
+
+                
+				
+				break;
+			case KeyEvent.VK_1:
+				System.out.println("Rotating Left");
+				
+				break;
+		}
 
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
-       if (e.) {
-           
-       }
+    public void dejarDePulsar(KeyEvent e) {
+        switch(e.getKeyCode()){
+			case KeyEvent.VK_0:
+				System.out.println("Rotating Right");
+				
+				break;
+			case KeyEvent.VK_1:
+				System.out.println("Rotating Left");
+				
+				break;
+		}
 
     }
 
-    @Override
-    public void keyReleased(KeyEvent e) {
-        // TODO Auto-generated method stub
-
-    }
+    
 
     
     

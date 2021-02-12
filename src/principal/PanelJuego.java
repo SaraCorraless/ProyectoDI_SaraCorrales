@@ -8,6 +8,8 @@ import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.KeyListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -19,7 +21,7 @@ import pantallas.*;
 /**
  * @author Sara Corrales Santos
  */
-public class PanelJuego extends JPanel implements Runnable, MouseListener, MouseMotionListener, ComponentListener {
+public class PanelJuego extends JPanel implements Runnable, MouseListener, MouseMotionListener, ComponentListener, KeyListener {
 
     private static final long serialVersionUID = 1L;
 
@@ -46,6 +48,8 @@ public class PanelJuego extends JPanel implements Runnable, MouseListener, Mouse
         this.addComponentListener(this);
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
+        setFocusable(true);
+        this.addKeyListener(this);
 
         //Inicio del hilo de la clase
         new Thread(this).start();
@@ -120,6 +124,24 @@ public class PanelJuego extends JPanel implements Runnable, MouseListener, Mouse
     public void cambiarPantalla(Pantalla nuevaPantalla) {
         nuevaPantalla.inicializarPantalla();
         pantallaActual = nuevaPantalla;
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        pantallaActual.moverFlecha(e);
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        // TODO Auto-generated method stub
+
     }
 
 
