@@ -16,7 +16,6 @@ import principal.Pantalla;
 import principal.Sprite;
 import java.awt.Point;
 
-import java.awt.event.KeyListener;
 
 public class PantallaJuego implements Pantalla{
 
@@ -56,7 +55,7 @@ public class PantallaJuego implements Pantalla{
     public PantallaJuego(PanelJuego panelJuego, JFrame ventana) {
         this.panelJuego = panelJuego;
         this.ventana = ventana;
-        posX = ventana.getWidth() / 2 +10;
+        posX = ventana.getWidth() / 2 -30 ;
         posY = ventana.getHeight() - 99;
         angulo = 90;
         
@@ -87,9 +86,9 @@ public class PantallaJuego implements Pantalla{
 
         x1 = ventana.getWidth()/2;
         y1 = ventana.getHeight();
-        float p0 = (x0 * (float) Math.cos(Math.toRadians(angulo))) - (y0 * (float) Math.sin(Math.toRadians(angulo)));
+       /*  float p0 = (x0 * (float) Math.cos(Math.toRadians(angulo))) - (y0 * (float) Math.sin(Math.toRadians(angulo)));
         float p1 = (x1 * (float) Math.cos(Math.toRadians(angulo))) - (y1 * (float) Math.sin(Math.toRadians(angulo)));
-
+ */
         palo = new Sprite(1, Color.BLACK, 10, 100, posX , posY , 0, 0);
         
 
@@ -112,12 +111,22 @@ public class PantallaJuego implements Pantalla{
     public void ejecutarFrame() {
         boolean colicion = false;
 
-       /*  try {
-            Thread.sleep(20);
+        try {
+            Thread.sleep(15);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        } */
-        bolaLanzamiento.mover(ventana.getWidth(), ventana.getHeight());
+        } 
+        bolaLanzamiento.moverSinBordes();
+
+        if (bolaLanzamiento.getPosY() < 0) {
+            System.out.println("Esta fuera");
+            bolaLanzamiento.setPosY(0);
+            circulos.add(bolaLanzamiento);
+            bolaLanzamiento = new Sprite(0, colorsBolas[random.nextInt(colorsBolas.length)], ANCHO_BOLA,
+                            ALTO_BOLA, palo.getPosX() - ANCHO_BOLA / 2 + palo.getAncho() / 2,
+                            ventana.getHeight() - ANCHO_BOLA * 2, 0, 0);
+        }
+
 
         for (int i = 0; i < circulos.size(); i++) {
             if(bolaLanzamiento.colisiona(circulos.get(i))){
@@ -135,6 +144,9 @@ public class PantallaJuego implements Pantalla{
                     bolaLanzamiento.setPosX(circulos.get(i).getPosX());
                     bolaLanzamiento.setPosY(circulos.get(i).getPosY() + ANCHO_BOLA);
                     circulos.add(bolaLanzamiento);
+                    bolaLanzamiento = new Sprite(0, colorsBolas[random.nextInt(colorsBolas.length)], ANCHO_BOLA,
+                            ALTO_BOLA, palo.getPosX() - ANCHO_BOLA / 2 + palo.getAncho() / 2,
+                            ventana.getHeight() - ANCHO_BOLA * 2, 0, 0);
                 }
                 
             }
@@ -178,15 +190,15 @@ public class PantallaJuego implements Pantalla{
                     
                     if(palo.getPosX() < 0){
                         System.out.println("No se puede mover más");
-                        palo.setPosX(ANCHO_BOLA );
+                        palo.setPosX(ANCHO_BOLA/2 );
                         posX = palo.getPosX();
-                        bolaLanzamiento.setPosX(palo.getPosX() - ANCHO_BOLA/2+palo.getAncho()/2  );
+                        bolaLanzamiento.setPosX(palo.getPosX() - ANCHO_BOLA/2 + palo.getAncho()/2  );
                     } else{
-                        palo.setPosX(palo.getPosX() - ANCHO_BOLA/2);
+                        palo.setPosX(palo.getPosX() - ANCHO_BOLA);
                         palo.setPosY(palo.getPosY());
                         posX = palo.getPosX();
                         posY = palo.getPosY();
-                        bolaLanzamiento.setPosX(palo.getPosX() - ANCHO_BOLA/2+palo.getAncho()/2);
+                        bolaLanzamiento.setPosX(palo.getPosX() - ANCHO_BOLA/2 + palo.getAncho()/2);
                     }
 
                
@@ -198,7 +210,7 @@ public class PantallaJuego implements Pantalla{
                 palo = new Sprite(1, Color.BLACK, 10, 100, posX, posY , 0, 0);
  */
                 
-                if(palo.getPosX() > ventana.getWidth()){
+                if(bolaLanzamiento.getPosX() > ventana.getWidth()-ANCHO_BOLA){
                     System.out.println("No se puede mover más");
                     palo.setPosX(ventana.getWidth() - ANCHO_BOLA);
                     bolaLanzamiento.setPosX(palo.getPosX() - ANCHO_BOLA/2+palo.getAncho()/2);
@@ -207,7 +219,7 @@ public class PantallaJuego implements Pantalla{
                     palo.setPosY(palo.getPosY());
                     posX = palo.getPosX();
                     posY = palo.getPosY();
-                    bolaLanzamiento.setPosX(palo.getPosX() - ANCHO_BOLA/2+palo.getAncho()/2);
+                    bolaLanzamiento.setPosX(palo.getPosX() - ANCHO_BOLA/2 + palo.getAncho()/2);
                 }
 
 

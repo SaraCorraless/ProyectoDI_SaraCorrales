@@ -21,7 +21,7 @@ public class VentanaPrincipal {
      */
 	public VentanaPrincipal() {
 		ventana = new JFrame();
-		ventana.setBounds(20, 20, 416, 600);
+		ventana.setBounds(20, 20, 418, 600);
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}

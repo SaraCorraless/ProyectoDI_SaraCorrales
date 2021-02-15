@@ -41,7 +41,7 @@ public class PanelJuego extends JPanel implements Runnable, MouseListener, Mouse
     public PanelJuego(JFrame ventana) {
         this.ventana = ventana;
         //inicio del atributo pantallaActual con una referencia de la propia clase PanelJuego
-        pantallaActual = new PantallaJuego(this, ventana);
+        pantallaActual = new PantallaInicio(this, ventana);
         
 
         //Inicio de los listenners con la referencia a la clase PanelJuego
