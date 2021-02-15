@@ -24,6 +24,10 @@ public class Sprite {
     private int velY;
 
 
+    //graphics
+    Graphics gBolas, gDisparador;
+
+
     /**
      * Constructor que crea un sprite de un color
      * @param color
@@ -100,18 +104,18 @@ public class Sprite {
      */
     private void iniciarBuffer() {
         buffer = new BufferedImage(ancho, alto, BufferedImage.TYPE_INT_ARGB);
-        Graphics g = buffer.getGraphics();
-        g.setColor(color);
-        g.fillOval(0, 0, ancho, alto);
-        g.dispose();
+        gBolas = buffer.getGraphics();
+        gBolas.setColor(color);
+        gBolas.fillOval(0, 0, ancho, alto);
+        gBolas.dispose();
     }
 
     private void iniciarBufferDisparador() {
         buffer = new BufferedImage(ancho, alto, BufferedImage.TYPE_INT_ARGB);
-        Graphics g = buffer.getGraphics();
-        g.setColor(color);
-        g.fillRect(0, 0, ancho, alto);
-        g.dispose();
+        gDisparador = buffer.getGraphics();
+        gDisparador.setColor(color);
+        gDisparador.fillRect(0, 0, ancho, alto);
+        gDisparador.dispose();
     }
 
     //GETTERS Y SETTERS
@@ -170,6 +174,16 @@ public class Sprite {
     public void setVelX(int velX) {
         this.velX = velX;
     }
+
+
+    public int getVelY() {
+        return this.velY;
+    }
+
+    public void setVelY(int velY) {
+        this.velY = velY;
+    }
+
 
 
     /**

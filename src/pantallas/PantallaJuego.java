@@ -6,6 +6,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.JFrame;
@@ -33,7 +34,7 @@ public class PantallaJuego implements Pantalla{
     private final static int ALTO_BOLA = 40;
 
     // CIRCULOS
-    private Sprite[] circulos;
+    private ArrayList<Sprite> circulos = new ArrayList<Sprite>();
     private Sprite bolaLanzamiento;
     private Sprite siguientebola;
 
@@ -48,18 +49,21 @@ public class PantallaJuego implements Pantalla{
     private int posX , posY;
     private Point p0, p1;
 
-    private int angulo;
+    private float x0, y0, x1, y1;
+
+    private double angulo;
 
     public PantallaJuego(PanelJuego panelJuego, JFrame ventana) {
         this.panelJuego = panelJuego;
         this.ventana = ventana;
-        posX = ventana.getWidth() / 2;
+        posX = ventana.getWidth() / 2 +10;
         posY = ventana.getHeight() - 99;
         angulo = 90;
+        
 
-        /* p0 = new Point(ventana.getWidth() / 2, ventana.getHeight() -palo.getAlto());
-        p1 = new Point(ventana.getWidth()/2, ventana.getHeight()); */
-        circulos = new Sprite[40];
+
+
+        //circulos = new Sprite[40];
         random = new Random();
     }
 
@@ -68,37 +72,76 @@ public class PantallaJuego implements Pantalla{
 
         ventana.setBackground(new Color(180, 174, 244));
         int contador = 0;
-        for (int i = 0; i < circulos.length / 10; i++) {
+        for (int i = 0; i < 40 / 10; i++) {
             for (int j = 0; j < 10; j++) {
-                circulos[contador] = new Sprite(0, colorsBolas[random.nextInt(colorsBolas.length)], ANCHO_BOLA,
-                        ALTO_BOLA, ANCHO_BOLA * j, ALTO_BOLA * (i), 0, 0);
+                circulos.add(new Sprite(0, colorsBolas[random.nextInt(colorsBolas.length)], ANCHO_BOLA,
+                        ALTO_BOLA, ANCHO_BOLA * j, ALTO_BOLA * (i), 0, 0));
 
                 contador++;
             }
 
         }
 
-        palo = new Sprite(1, Color.BLACK, 10, 100, ventana.getWidth() / 2, ventana.getHeight() - 99, 0, 0);
+        x0 = ventana.getWidth()/2;
+        y0 = ventana.getHeight() - 99;
+
+        x1 = ventana.getWidth()/2;
+        y1 = ventana.getHeight();
+        float p0 = (x0 * (float) Math.cos(Math.toRadians(angulo))) - (y0 * (float) Math.sin(Math.toRadians(angulo)));
+        float p1 = (x1 * (float) Math.cos(Math.toRadians(angulo))) - (y1 * (float) Math.sin(Math.toRadians(angulo)));
+
+        palo = new Sprite(1, Color.BLACK, 10, 100, posX , posY , 0, 0);
+        
 
         bolaLanzamiento = new Sprite(0, colorsBolas[random.nextInt(colorsBolas.length)], ANCHO_BOLA, ALTO_BOLA,
-                ventana.getWidth() / 2 - 25, ventana.getHeight() - ANCHO_BOLA * 2, 0, 0);
+                palo.getPosX() - ANCHO_BOLA/2 + palo.getAncho()/2, ventana.getHeight() - ANCHO_BOLA * 2, 0, 0);
 
     }
 
     @Override
     public void pintarPantalla(Graphics g) {
-        for (int i = 0; i < circulos.length; i++) {
-            circulos[i].estampar(g);
+        for (int i = 0; i < circulos.size(); i++) {
+            circulos.get(i).estampar(g);
         }
-
-        bolaLanzamiento.estampar(g);
         palo.estampar(g);
+        bolaLanzamiento.estampar(g);
+        
     }
 
     @Override
     public void ejecutarFrame() {
-        // TODO Auto-generated method stub
+        boolean colicion = false;
 
+       /*  try {
+            Thread.sleep(20);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } */
+        bolaLanzamiento.mover(ventana.getWidth(), ventana.getHeight());
+
+        for (int i = 0; i < circulos.size(); i++) {
+            if(bolaLanzamiento.colisiona(circulos.get(i))){
+                    //TODO: Mejorar colisiones y movimientos
+                if (circulos.get(i).getColor() == bolaLanzamiento.getColor()) {
+                    System.out.println("Colision");
+                    bolaLanzamiento = null;
+                    circulos.remove(i);
+                    System.out.println("Puntos: +1");
+                    bolaLanzamiento = new Sprite(0, colorsBolas[random.nextInt(colorsBolas.length)], ANCHO_BOLA,
+                            ALTO_BOLA, palo.getPosX() - ANCHO_BOLA / 2 + palo.getAncho() / 2,
+                            ventana.getHeight() - ANCHO_BOLA * 2, 0, 0);
+
+                } else {
+                    bolaLanzamiento.setPosX(circulos.get(i).getPosX());
+                    bolaLanzamiento.setPosY(circulos.get(i).getPosY() + ANCHO_BOLA);
+                    circulos.add(bolaLanzamiento);
+                }
+                
+            }
+            
+        }
+        ventana.repaint();
+        
     }
 
     @Override
@@ -123,36 +166,69 @@ public class PantallaJuego implements Pantalla{
     @Override
     public void moverFlecha(KeyEvent e) {
         switch(e.getKeyCode()){
-			case KeyEvent.VK_0:
-                int x = (int) Math.sin(angulo);
-				palo.setPosX(x);
+			case KeyEvent.VK_A:
 
-                int y = (int) Math.cos(angulo);
-				palo.setPosX(y);
+                /* int x = (int) Math.cos(angulo)*palo.getAlto();
+                int y = (int) Math.sin(angulo)*palo.getAlto();
+				palo.setPosX(x*y);
+                palo.setPosY(posY); */
+                    /* palo = null;
+                    palo = new Sprite(1, Color.BLACK, 10, 100, posX, posY, 0, 0);
+ */
+                    
+                    if(palo.getPosX() < 0){
+                        System.out.println("No se puede mover más");
+                        palo.setPosX(ANCHO_BOLA );
+                        posX = palo.getPosX();
+                        bolaLanzamiento.setPosX(palo.getPosX() - ANCHO_BOLA/2+palo.getAncho()/2  );
+                    } else{
+                        palo.setPosX(palo.getPosX() - ANCHO_BOLA/2);
+                        palo.setPosY(palo.getPosY());
+                        posX = palo.getPosX();
+                        posY = palo.getPosY();
+                        bolaLanzamiento.setPosX(palo.getPosX() - ANCHO_BOLA/2+palo.getAncho()/2);
+                    }
 
+               
                 
-				
+                
 				break;
-			case KeyEvent.VK_1:
-				System.out.println("Rotating Left");
-				
+			case KeyEvent.VK_D:
+                /* palo = null;
+                palo = new Sprite(1, Color.BLACK, 10, 100, posX, posY , 0, 0);
+ */
+                
+                if(palo.getPosX() > ventana.getWidth()){
+                    System.out.println("No se puede mover más");
+                    palo.setPosX(ventana.getWidth() - ANCHO_BOLA);
+                    bolaLanzamiento.setPosX(palo.getPosX() - ANCHO_BOLA/2+palo.getAncho()/2);
+                } else {
+                    palo.setPosX(palo.getPosX() + ANCHO_BOLA);
+                    palo.setPosY(palo.getPosY());
+                    posX = palo.getPosX();
+                    posY = palo.getPosY();
+                    bolaLanzamiento.setPosX(palo.getPosX() - ANCHO_BOLA/2+palo.getAncho()/2);
+                }
+
+
 				break;
+
+            case KeyEvent.VK_SPACE:
+                System.out.println("Disparo");
+                bolaLanzamiento.setVelY(-5);
+               
+                break;
 		}
+
+        
+        ventana.repaint();
+        
 
     }
 
     @Override
     public void dejarDePulsar(KeyEvent e) {
-        switch(e.getKeyCode()){
-			case KeyEvent.VK_0:
-				System.out.println("Rotating Right");
-				
-				break;
-			case KeyEvent.VK_1:
-				System.out.println("Rotating Left");
-				
-				break;
-		}
+        
 
     }
 
