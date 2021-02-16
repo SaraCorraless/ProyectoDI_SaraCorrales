@@ -52,6 +52,9 @@ public class PantallaJuego implements Pantalla{
 
     private double angulo;
 
+    private int puntos = 0;
+
+
     public PantallaJuego(PanelJuego panelJuego, JFrame ventana) {
         this.panelJuego = panelJuego;
         this.ventana = ventana;
@@ -136,6 +139,7 @@ public class PantallaJuego implements Pantalla{
                     bolaLanzamiento = null;
                     circulos.remove(i);
                     System.out.println("Puntos: +1");
+                    puntos++;
                     bolaLanzamiento = new Sprite(0, colorsBolas[random.nextInt(colorsBolas.length)], ANCHO_BOLA,
                             ALTO_BOLA, palo.getPosX() - ANCHO_BOLA / 2 + palo.getAncho() / 2,
                             ventana.getHeight() - ANCHO_BOLA * 2, 0, 0);
@@ -153,6 +157,10 @@ public class PantallaJuego implements Pantalla{
             
         }
         ventana.repaint();
+
+        if(puntos == 10){
+            panelJuego.cambiarPantalla(new PantallaFin(panelJuego, puntos));
+        }
         
     }
 
