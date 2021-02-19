@@ -23,7 +23,7 @@ public class VentanaPrincipal {
 		ventana = new JFrame();
 		ventana.setBounds(20, 20, 418, 600);
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		ventana.setTitle("Puzzle bubble");
 	}
 	
 	/**
@@ -42,9 +42,7 @@ public class VentanaPrincipal {
 	/**
      * Inicializa todos los lísteners del frame
      */
-	public void inicializarListeners(){
-
-	}
+	public void inicializarListeners(){}
 
 	/**
 	 * Método que realiza todas las llamadas necesarias para inicializar la ventana correctamente.

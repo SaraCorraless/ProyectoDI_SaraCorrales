@@ -1,59 +1,46 @@
 package principal;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import pantallas.*;
-
-
+import pantallas.PantallaInicio;
 
 /**
  * @author Sara Corrales Santos
  */
-public class PanelJuego extends JPanel implements Runnable, MouseListener, MouseMotionListener, ComponentListener, KeyListener {
+public class PanelJuego extends JPanel implements Runnable, ComponentListener, KeyListener {
 
     private static final long serialVersionUID = 1L;
 
     // Instancia de la pantalla que se ejuta en se momento
     private Pantalla pantallaActual;
 
-    //Instancia de la ventana principal
-    private JFrame ventana;
-
-
-
-
-
     /**
      * Constructor de lla clase
-     */ 
+     */
     public PanelJuego(JFrame ventana) {
-        this.ventana = ventana;
-        //inicio del atributo pantallaActual con una referencia de la propia clase PanelJuego
+        // inicio del atributo pantallaActual con una referencia de la propia clase
+        // PanelJuego
         pantallaActual = new PantallaInicio(this, ventana);
-        
 
-        //Inicio de los listenners con la referencia a la clase PanelJuego
+        // Inicio de los listenners con la referencia a la clase PanelJuego
         this.addComponentListener(this);
-        this.addMouseListener(this);
-        this.addMouseMotionListener(this);
+        /*
+         * this.addMouseListener(this); this.addMouseMotionListener(this);
+         */
         setFocusable(true);
         this.addKeyListener(this);
 
-        //Inicio del hilo de la clase
+        // Inicio del hilo de la clase
         new Thread(this).start();
-       
+
     }
 
     // Método que se llama automáticamente para pintar el componente.
@@ -76,49 +63,26 @@ public class PanelJuego extends JPanel implements Runnable, MouseListener, Mouse
         }
     }
 
-    //MÉTODOS DE LA INTERFAZ MOUSELISTENER
+    // MÉTODOS DE LA INTERFAZ COMPONENTLISTENER
     @Override
-    public void mouseClicked(MouseEvent e) {}
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-        pantallaActual.pulsarRaton(e);
+    public void componentResized(ComponentEvent e) {
     }
 
     @Override
-    public void mouseReleased(MouseEvent e) {}
-
-    @Override
-    public void mouseEntered(MouseEvent e) {}
-
-    @Override
-    public void mouseExited(MouseEvent e) {}
-
-
-    //MÉTODOS DE LA INTERFAZ MOUSEMOTIONLISTENER
-    @Override
-    public void mouseDragged(MouseEvent e) {}
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-        pantallaActual.moverRaton(e);
+    public void componentMoved(ComponentEvent e) {
     }
 
-    //MÉTODOS DE LA INTERFAZ COMPONENTLISTENER
     @Override
-    public void componentResized(ComponentEvent e) {}
+    public void componentShown(ComponentEvent e) {
+    }
 
     @Override
-    public void componentMoved(ComponentEvent e) {}
-
-    @Override
-    public void componentShown(ComponentEvent e) {}
-
-    @Override
-    public void componentHidden(ComponentEvent e) {}
+    public void componentHidden(ComponentEvent e) {
+    }
 
     /**
      * Método que permite cambiar de pantalla en el juego
+     * 
      * @param nuevaPantalla
      */
     public void cambiarPantalla(Pantalla nuevaPantalla) {
@@ -134,16 +98,12 @@ public class PanelJuego extends JPanel implements Runnable, MouseListener, Mouse
 
     @Override
     public void keyPressed(KeyEvent e) {
-        pantallaActual.moverFlecha(e);
+        pantallaActual.controles(e);
 
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        // TODO Auto-generated method stub
-
     }
 
-
-    
 }
