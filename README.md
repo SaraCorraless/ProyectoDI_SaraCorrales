@@ -1,14 +1,15 @@
-## Getting Started
+## Puzzle Bubble:
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+#### Autor: Sara Corrales Santos
+#### Fecha: 19 de Febrero del 2021
+#### Curdo: 2020/2021
 
-## Folder Structure
 
-The workspace contains two folders by default, where:
+### Descripción del juego:
+Este juego es una versión del juego de arcade Puzzle bubble. En esta versión nosotros lanzamos bolas a un mapa de bolas que se genera aleatoriamente. 
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+Si la bola que se lanza es del mismo color que con la que colisiona se eliminan las dos bolas del mapa y se suma un punto, en caso contrario no se elimina ninguna bola y no se suman punto pero si se añade la bola lanzada al mapa colocandose debajo de la bola del mapa con la que ha colisionado.
 
-## Dependency Management
 
-The `JAVA DEPENDENCIES` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-pack/blob/master/release-notes/v0.9.0.md#work-with-jar-files-directly).
+Cuando llegamos a los 15 puntos aparece la pantalla final indicando que se ha acabado el juego.
+
