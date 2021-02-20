@@ -94,8 +94,6 @@ public class PantallaInicio implements Pantalla {
         }
         colorIntro = colorIntro == Color.PINK ? Color.RED : Color.PINK;
 
-        
-
     }
    
 

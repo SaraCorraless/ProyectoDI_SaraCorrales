@@ -142,8 +142,7 @@ public class PantallaJuego implements Pantalla {
 
             }
 
-        }
-        ventana.repaint();
+        } 
 
         // si se eliminan 15 bolas obtenemos 15 puntos y se acaba el juego
         if (puntos == 15) {
