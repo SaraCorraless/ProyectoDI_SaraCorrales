@@ -2,7 +2,7 @@
 
 #### Autor: Sara Corrales Santos
 #### Fecha: 19 de Febrero del 2021
-#### Curdo: 2020/2021
+#### Curso: 2020/2021
 
 
 ### Descripción del juego:
